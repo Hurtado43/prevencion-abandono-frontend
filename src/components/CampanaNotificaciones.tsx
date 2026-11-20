@@ -5,6 +5,7 @@ import type { Notificacion } from '../types'
 import { hace } from '../utils/format'
 import { Icon, type IconName } from './Icon'
 import { RiesgoBadge } from './Ui'
+import { sondear } from '../utils/sondeo'
 
 const ICONO_TIPO: Record<string, IconName> = {
   RIESGO: 'alert',
@@ -40,10 +41,10 @@ export function CampanaNotificaciones() {
       }
     }
     void cargar()
-    const intervalo = window.setInterval(cargar, 30_000)
+    const detener = sondear(cargar, 30_000)
     return () => {
       activo = false
-      window.clearInterval(intervalo)
+      detener()
     }
   }, [grupo])
 

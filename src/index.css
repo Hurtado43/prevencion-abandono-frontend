@@ -8,3 +8,11 @@
 @import './styles/chat.css';
 @import './styles/estudiante.css';
 @import './styles/responsive.css';
+
+/* Mientras baja el código de una pantalla (carga bajo demanda) */
+.cargando-pantalla {
+  padding: 48px 24px;
+  text-align: center;
+  color: var(--color-texto-suave, #5b6b64);
+  font-size: 15px;
+}

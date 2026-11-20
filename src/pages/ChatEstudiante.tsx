@@ -6,6 +6,7 @@ import { Avatar, Cargando } from '../components/Ui'
 import { chatApi, mensajeError } from '../services/api'
 import type { Mensaje } from '../types'
 import { fechaCorta, hora } from '../utils/format'
+import { sondear } from '../utils/sondeo'
 
 const MAX_ARCHIVO = 5 * 1024 * 1024
 const PROFESOR = { nombre: 'Carlos Andrés', apellido: 'Muñoz Ibarra' }
@@ -88,10 +89,10 @@ export function ChatEstudiante() {
       }
     }
     void cargar()
-    const intervalo = window.setInterval(() => void cargar(true), 4_000)
+    const detener = sondear(() => cargar(true), 4_000)
     return () => {
       vigente = false
-      window.clearInterval(intervalo)
+      detener()
     }
   }, [estudianteId])
 

@@ -8,6 +8,7 @@ import { chatApi, estudiantesApi, mensajeError } from '../services/api'
 import type { Conversacion, Estudiante, Mensaje } from '../types'
 import { hace, hora } from '../utils/format'
 import { ChatEstudiante } from './ChatEstudiante'
+import { sondear } from '../utils/sondeo'
 
 const MAX_ARCHIVO = 5 * 1024 * 1024
 const SUGERENCIAS = ['¿Cómo estás?', 'Vi que faltaste a clase esta semana', '¿Podemos agendar una cita?']
@@ -91,10 +92,10 @@ function ChatInstitucional() {
       }
     }
     void cargar()
-    const intervalo = window.setInterval(cargar, 10_000)
+    const detener = sondear(cargar, 10_000)
     return () => {
       vigente = false
-      window.clearInterval(intervalo)
+      detener()
     }
   }, [])
 
@@ -132,10 +133,10 @@ function ChatInstitucional() {
     }
 
     void cargar()
-    const intervalo = window.setInterval(() => void cargar(true), 4_000)
+    const detener = sondear(() => cargar(true), 4_000)
     return () => {
       vigente = false
-      window.clearInterval(intervalo)
+      detener()
     }
   }, [activo])
 
